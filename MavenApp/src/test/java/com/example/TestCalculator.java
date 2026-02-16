@@ -1,0 +1,21 @@
+package com.example;
+
+
+
+import org.junit.jupiter.api.Test;
+
+import static org.testng.AssertJUnit.assertEquals;
+
+public class TestCalculator {
+  @Test
+    public void testFingBig() {
+        Calculator obj=new Calculator();
+        assertEquals(20,obj.findBig(10,20));
+    }
+
+    @Test
+    public void testFindSmall(){
+        Calculator obj=new Calculator();
+        assertEquals(10,obj.findSmall(10,20));
+    }
+}
