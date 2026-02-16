@@ -1,0 +1,11 @@
+package com.example.task1;
+
+public class Publisher {
+    String name;
+    String address;
+
+    public Publisher(String name, String address) {
+        this.name = name;
+        this.address = address;
+    }
+}
