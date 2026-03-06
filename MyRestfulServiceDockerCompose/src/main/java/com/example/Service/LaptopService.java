@@ -1,0 +1,60 @@
+package com.example.service;
+
+import com.example.model.Laptop;
+import com.example.repository.LaptopRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class LaptopService {
+
+    @Autowired
+    LaptopRepository lr;
+
+    // Add a new laptop
+    public void addLaptop(Laptop lp) {
+        lr.save(lp);
+    }
+
+    // Get a list of all laptops
+    public List<Laptop> listLaptop() {
+        return lr.findAll();
+    }
+
+    // Find a laptop by ID
+    public Optional<Laptop> findOneLaptop(int index) {
+        return lr.findById(index);
+    }
+
+    // Update a laptop by ID
+    public Optional<Laptop> updateLaptop(int index, Laptop newLaptop) {
+        Optional<Laptop> oldLaptop = lr.findById(index);
+        if (oldLaptop.isPresent()) {
+            oldLaptop.get().setName(newLaptop.getName());
+            oldLaptop.get().setBrand(newLaptop.getBrand());
+            oldLaptop.get().setPrice(newLaptop.getPrice());
+            oldLaptop.get().setRAM(newLaptop.getRAM());
+            lr.save(oldLaptop.get());  // Save the updated laptop
+            return oldLaptop;  // Return the updated laptop
+        }
+        return Optional.empty();  // Return empty if laptop is not found
+    }
+
+    // Delete a laptop by ID
+    public void deleteLaptop(int index) {
+        Optional<Laptop> laptop = lr.findById(index);
+        if (laptop.isPresent()) {
+            lr.delete(laptop.get()); // Delete the laptop
+        } else {
+            throw new RuntimeException("Laptop id not found: " + index); // Handle case where laptop is not found
+        }
+    }
+
+    // Find laptops by brand
+    public List<Laptop> findByBrand(String brand) {
+        return lr.findByBrand(brand);
+    }
+}
